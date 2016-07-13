@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public class Main
 {
     static final int SIZE = 10;
+    static int startIterator = 0;
+    static int endIterator = 0;
 
     static Room [] [] createRooms()
     {
@@ -51,7 +53,7 @@ public class Main
         }
 
         neighbors = neighbors.stream()
-                .filter(room -> !room.wasvisited)
+                .filter(room -> !room.wasVisited)
                 .collect(Collectors.toCollection(ArrayList<Room>::new));
 
         return neighbors;
@@ -95,11 +97,22 @@ public class Main
 
     static boolean createMaze(Room [][] rooms, Room room)
     {
-        room.wasvisited = true;
+        if (startIterator==0)
+        {
+            room.isStartRoom = true;
+        }
+        room.wasVisited = true;
+        startIterator++;
         Room nextRoom = randomNeighbor(rooms, room.row, room.col);
         if (nextRoom == null)
         {
+            if (endIterator==0)
+            {
+                room.isEndRoom = true;
+            }
+            endIterator++;
             return false;
+
         }
         tearDownWall(room, nextRoom);
         while (createMaze(rooms, nextRoom));
@@ -116,8 +129,29 @@ public class Main
             System.out.print("|");
             for(Room room :row)
            {
-               System.out.print(room.hasBottom ? "_" : " ");
-               System.out.print(room.hasRight ? "|" : " ");
+               if(room.isEndRoom&&room.hasBottom)
+               {
+                   System.out.print(room.hasBottom ? "x̲" : " ");
+                   System.out.print(room.hasRight ? "|" : " ");
+               }
+               else if(room.isEndRoom&&room.hasRight)
+               {
+                   System.out.print(room.hasRight ? "x|" : " ");
+               }
+               else if (room.isStartRoom&&room.hasBottom)
+               {
+                   System.out.print(room.hasBottom ? "o̲" : " ");
+                   System.out.print(room.hasRight ? "|" : " ");
+               }
+               else if (room.isStartRoom&&room.hasRight)
+               {
+                   System.out.print(room.hasRight ? "o|" : " ");
+               }
+               else
+               {
+                   System.out.print(room.hasBottom ? "_" : " ");
+                   System.out.print(room.hasRight ? "|" : " ");
+               }
            }
             System.out.println();
         }

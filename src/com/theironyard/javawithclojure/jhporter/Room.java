@@ -7,9 +7,11 @@ public class Room
 {
     int row;
     int col;
-    boolean wasvisited = false;
+    boolean wasVisited = false;
     boolean hasBottom = true;
     boolean hasRight = true;
+    boolean isStartRoom = false;
+    boolean isEndRoom = false;
 
     public Room(int row, int col)
     {
