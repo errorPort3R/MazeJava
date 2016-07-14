@@ -17,7 +17,7 @@ public class Main
         Room [] [] rooms = new Room[SIZE] [SIZE];
         for (Room[] row :rooms)
         {
-            System.out.print(" _");
+            System.out.print(" _̲");
         }
         System.out.println();
         for(int row = 0;row<SIZE; row++)
@@ -149,7 +149,7 @@ public class Main
                }
                else
                {
-                   System.out.print(room.hasBottom ? "_" : " ");
+                   System.out.print(room.hasBottom ? "_̲" : " ");
                    System.out.print(room.hasRight ? "|" : " ");
                }
            }
